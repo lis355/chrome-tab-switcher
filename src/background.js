@@ -15,14 +15,10 @@ let getCurrentTab = function () {
 async function rememberCurrentTab() {
 	let currentTab = await getCurrentTab();
 
-	if (currentTab) {
-		let contains = historyTabs.find(function (element) {
-			return element.id === currentTab.id
-		});
-
-		if (!contains)
-			historyTabs.push(currentTab);
-	}
+	if (currentTab
+		&& !(historyTabs.length > 0
+			&& historyTabs[historyTabs.length - 1].id === currentTab.id))
+		historyTabs.push(currentTab);
 
 	while (historyTabs.length > 2)
 		historyTabs.splice(0, 1);
@@ -44,7 +40,7 @@ function switchTabs() {
 		let currentTab = historyTabs.pop();
 		let lastTab = historyTabs.pop();
 
-		console.log(`Switch between ${currentTab} and ${lastTab}`);
+		//console.log(`Switch between ${currentTab} and ${lastTab}`);
 
 		historyTabs.push(currentTab);
 
@@ -55,7 +51,6 @@ function switchTabs() {
 }
 
 chrome.commands.onCommand.addListener(function (command) {
-	console.log(command);
 	switch (command) {
 		case "tab-close":
 			closeCurrentTab();
@@ -79,9 +74,13 @@ chrome.windows.onFocusChanged.addListener(async function (windowId) {
 	await rememberCurrentTab();
 })();
 
+// let s_ = "";
 // setInterval(function () {
 // 	let s = "";
 // 	for (let i = 0; i < historyTabs.length; i++)
 // 		s += historyTabs[i].id + " ";
-// 	console.log(s);
-// }, 500);
+// 	if (s_ !== s) {
+// 		console.log(s);
+// 		s_ = s;
+// 	}
+// }, 100);
