@@ -1,0 +1,27 @@
+{
+	"manifest_version": 2,
+	"name": "tabswitcher",
+	"version": "1.0",
+	"background": {
+		"scripts": [
+			"background.js"
+		]
+	},
+	"permissions": [
+		"tabs"
+	],
+	"commands": {
+		"tab-close": {
+			"suggested_key": {
+				"default": "Ctrl+Q"
+			},
+			"description" : "Close tab"
+		},
+		"tab-switch": {
+			"suggested_key": {
+				"default": "Alt+Q"
+			},
+			"description" : "Switch to last active tab"
+		}
+	}
+}
